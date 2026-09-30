@@ -241,3 +241,10 @@ jobs:
           path: report.md
           if-no-files-found: error
           archive: false
+
+      - name: Update updater PR review checklist
+        run: python3 review/update_pr_checklist.py
+        env:
+          PR_BODY_TOKEN: ${{ secrets.GH_TOKEN || secrets.NIXPKGS_PR_TOKEN }}
+          PR_JSON: ${{ needs.prepare.outputs.pr }}
+          INPUTS: ${{ toJSON(github.event.inputs) }}
